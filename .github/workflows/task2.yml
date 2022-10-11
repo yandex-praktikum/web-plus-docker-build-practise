@@ -2,9 +2,8 @@ name: "Автотесты: Задача 2"
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    paths:
+      - 'task2/**/*'
 
 jobs:
   task2:
@@ -14,11 +13,11 @@ jobs:
     - name: Подготовка окружения (Docker BuildX)
       uses: docker/setup-buildx-action@v2.0.0
     - name: Сборка образа 
-      run: docker build . -t my-app
+      run: docker build . -t task2
       working-directory: ./task2
     - name: Проверка рабочей директории
       run: bash .github/tests/test-workdir.sh /home/ilovedocker/app task2
     - name: Проверка энтрипоинта образа
-      run: bash .github/tests/test-entrypoint.sh "[sh hello.sh]"
+      run: bash .github/tests/test-entrypoint.sh "[sh hello.sh]" task2
     - name: Проверка результата выполненения
       run: bash .github/tests/check-output.sh "task2" "Hello from Y.Practicum & Docker"
